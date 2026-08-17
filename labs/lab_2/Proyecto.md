@@ -17,8 +17,8 @@ agrícola. La estación tiene tres sensores:
 | Viento | sobre 25 km/h | km/h |
 | Humedad | sobre 85 % | % |
 
-El programa recibe una fecha, valida las mediciones y cuenta las situaciones de
-riesgo por sensor.
+El programa recibe una fecha, revisa las mediciones de ese día y cuenta las
+situaciones de riesgo por sensor.
 
 ```bash
 uv run python main.py --fecha 2026-06-15
@@ -30,7 +30,6 @@ Temperatura    3 lecturas en riesgo
 Viento         2 lecturas en riesgo
 Humedad        5 lecturas en riesgo
 
-Descartadas: 2 lecturas inválidas
 Total: 10 situaciones de riesgo
 ```
 
@@ -42,14 +41,13 @@ Total: 10 situaciones de riesgo
 
 | Etapa | Contenido | Puntaje |
 |---|---|---:|
-| 1 | Estructura del proyecto | 0,3 |
-| 2 | Clase `Sensor` | 0,4 |
-| 3 | Herencia y sensores concretos | 1,0 |
-| 4 | Abstracción, encapsulación y propiedades | 1,0 |
-| 5 | Polimorfismo y reporte | 1,1 |
-| 6 | Validación y excepciones | 1,1 |
-| 7 | Orquestador | 0,3 |
-| 8 | Pruebas automáticas | 0,2 |
+| 1 | Estructura del proyecto | 0,4 |
+| 2 | Clase `Sensor` | 0,6 |
+| 3 | Herencia y sensores concretos | 1,2 |
+| 4 | Abstracción, encapsulación y propiedades | 1,2 |
+| 5 | Polimorfismo y reporte | 1,4 |
+| 6 | Orquestador | 0,3 |
+| 7 | Pruebas automáticas | 0,3 |
 | Salida | Preguntas de comprensión | 0,6 |
 | **Total** |  | **6,0** |
 
@@ -64,7 +62,6 @@ data/
 src/agroalerta/
 ├── __init__.py
 ├── datos.py          # entregado; no modificar
-├── errores.py
 ├── sensores.py
 └── reporte.py
 
@@ -78,16 +75,13 @@ El archivo `lecturas.csv` contiene las columnas `fecha`, `hora`,
 `sensor` y `valor`. `datos.py` entrega la función `cargar_lecturas`,
 que agrupa las mediciones por sensor para una fecha. No modifiquen ese archivo.
 
-> ⚠️ **Aviso**
+> 📌 **Idea clave**
 >
-> Un umbral de riesgo indica cuándo el cultivo está en peligro. Un rango físico
-> indica cuándo una medición puede provenir de un sensor funcionando. No son la
-> misma cosa: `-2 °C` es una medición válida, pero también es riesgosa.
+> Un umbral de riesgo indica cuándo el cultivo está en peligro; no dice nada
+> sobre el clima "normal". Por ejemplo, `-2 °C` es una temperatura perfectamente
+> corriente en invierno y, aun así, es riesgosa para el cultivo.
 
-El archivo contiene algunas mediciones físicamente imposibles. Estas deben
-descartarse durante la etapa de validación.
-
-## Etapa 1 — Estructura del proyecto (0,3 puntos)
+## Etapa 1 — Estructura del proyecto (0,4 puntos)
 
 Prepare el proyecto:
 
@@ -101,7 +95,7 @@ Prepare el proyecto:
 >
 > Ejecute `uv run python main.py`. El programa debe iniciar sin errores.
 
-## Etapa 2 — La clase `Sensor` (0,4 puntos)
+## Etapa 2 — La clase `Sensor` (0,6 puntos)
 
 En `src/agroalerta/sensores.py`, cree una clase `Sensor` que:
 
@@ -110,7 +104,7 @@ En `src/agroalerta/sensores.py`, cree una clase `Sensor` que:
 - defina `es_riesgo(valor)` con type hints;
 - devuelva temporalmente `False` desde `es_riesgo`.
 
-## Etapa 3 — Herencia y sensores concretos (1,0 punto)
+## Etapa 3 — Herencia y sensores concretos (1,2 puntos)
 
 Cree tres subclases de `Sensor`:
 
@@ -138,43 +132,31 @@ SensorHumedad(85)
 
 Valores de referencia:
 
-| Sensor | Normal | Riesgoso | Inválido |
-|---|---|---|---|
-| Temperatura | `18 °C` | `-2 °C`, `42 °C` | `-300 °C` |
-| Viento | `10 km/h` | `30 km/h` | `250 km/h` |
-| Humedad | `70 %` | `90 %` | `110 %` |
+| Sensor | Normal | Riesgoso |
+|---|---|---|
+| Temperatura | `18 °C` | `-2 °C`, `42 °C` |
+| Viento | `10 km/h` | `30 km/h` |
+| Humedad | `70 %` | `90 %` |
 
 > ⚠️ **Aviso**
 >
 > Para la temperatura se usa `or`, no `and`: una temperatura puede ser
 > riesgosa por estar demasiado baja o demasiado alta.
 
-## Etapa 4 — Abstracción, encapsulación y propiedades (1,0 punto)
+## Etapa 4 — Abstracción y encapsulación (0,6 puntos)
 
 Mejore las clases anteriores:
 
 - haga que `Sensor` herede de `ABC`;
 - marque `es_riesgo` como método abstracto;
 - renombre los umbrales a `_minimo` y `_maximo`;
-- agregue la propiedad `rango_seguro`.
-
-La propiedad debe producir un texto coherente para ambos casos:
-
-- sensores con mínimo y máximo: `entre 0 y 40 °C`;
-- sensores con un solo extremo: por ejemplo, `bajo 25 km/h`.
-
-> 🧪 **Comprobación**
->
-> `SensorTemperatura(0, 40).rango_seguro` debe describir el rango y
-> `Sensor("generico", "unidades")` debe producir `TypeError` después de hacer
-> abstracta la clase base.
 
 > ❓ **Pregunta para el notebook**
 >
 > ¿Qué comunica el prefijo `_` si todavía es posible acceder al atributo desde
 > fuera de la clase?
 
-## Etapa 5 — Polimorfismo y reporte (1,1 puntos)
+## Etapa 5 — Polimorfismo y reporte (2 puntos)
 
 Cree `src/agroalerta/reporte.py` con:
 
@@ -188,17 +170,17 @@ La función recibe:
 - una lista de objetos sensor;
 - un diccionario como `{"temperatura": [2.1, -1.2], ...}`.
 
-Debe devolver dos valores:
+Debe devolver un diccionario con una entrada por sensor:
 
 ```python
-conteo, descartadas = contar_riesgos(sensores, lecturas)
+conteo = contar_riesgos(sensores, lecturas)
+# {"temperatura": 3, "viento": 2, "humedad": 5}
 ```
-
-En esta etapa, antes de agregar la validación, `descartadas` puede ser siempre
-cero. El conteo debe tener una entrada por sensor.
 
 La función debe recorrer la lista y llamar a `sensor.es_riesgo(valor)`. No debe
 usar `isinstance` ni tener una condición distinta para cada tipo de sensor.
+
+Si un sensor no tiene lecturas para esa fecha, su conteo debe ser `0`.
 
 > 📌 **Idea clave**
 >
@@ -210,48 +192,7 @@ usar `isinstance` ni tener una condición distinta para cada tipo de sensor.
 > Si se agrega un sensor de lluvia, ¿qué archivo debe modificarse y qué parte
 > de `contar_riesgos` debería permanecer intacta?
 
-## Etapa 6 — Validación y excepciones (1,1 puntos)
-
-Cree `src/agroalerta/errores.py` con estas excepciones:
-
-```python
-class LecturaInvalidaError(Exception):
-    """El valor medido es físicamente imposible."""
-
-
-class DatosInsuficientesError(Exception):
-    """No hay suficientes lecturas para concluir algo."""
-```
-
-Agregue a `Sensor` un método `validar(valor)` que levante
-`LecturaInvalidaError` fuera de estos rangos físicos:
-
-| Sensor | Rango físicamente posible |
-|---|---|
-| Temperatura | −50 a 60 °C |
-| Viento | 0 a 200 km/h |
-| Humedad | 0 a 100 % |
-
-Además:
-
-- use `try`/`except LecturaInvalidaError` en `contar_riesgos`;
-- descarte las lecturas inválidas sin detener todo el programa;
-- cuente las lecturas descartadas;
-- levante `DatosInsuficientesError` si un sensor tiene menos de 20 lecturas
-  válidas.
-
-> ⚠️ **Aviso**
->
-> Una lectura puede ser válida y riesgosa al mismo tiempo. Por ejemplo, `-2 °C`
-> está dentro del rango físico de la temperatura, pero activa el riesgo de
-> helada.
-
-> ❓ **Pregunta para el notebook**
->
-> ¿Por qué “no hay suficientes datos” no debe confundirse con “hubo cero
-> situaciones de riesgo”?
-
-## Etapa 7 — Orquestador (0,3 puntos)
+## Etapa 6 — Orquestador (0,3 puntos)
 
 Complete `main.py` para que coordine las piezas del proyecto:
 
@@ -261,17 +202,29 @@ Complete `main.py` para que coordine las piezas del proyecto:
 - llame a `contar_riesgos`;
 - muestre el reporte.
 
-La infraestructura de línea de comandos y la función de impresión pueden
-entregarse como código inicial. El objetivo de esta etapa es conectar los
-módulos, no implementar un parser desde cero.
+
+El siguiente código puede ser de utilidad para parsear la fecha del argumento (`argparse` es el módulo estándar para leer argumentos de la línea de comandos.):
+
+```python
+import argparse
+
+
+def main():
+    parser = argparse.ArgumentParser(description="AgroAlerta")
+    parser.add_argument("--fecha", default="2026-06-15")
+    args = parser.parse_args()
+```
+
+
+
 
 > 🧪 **Comprobación**
 >
-> `2026-06-15` debe producir `3`, `2`, `5`, `2` lecturas descartadas y
-> total `10`. `2026-06-16` debe producir `0`, `4`, `2`, `1` lectura
-> descartada y total `6`.
+> `2026-06-15` debe producir `3`, `2`, `5` y total `10`. `2026-06-16` debe
+> producir `0`, `4`, `2` y total `6`. Si ambas fechas dan lo mismo, no están
+> usando el argumento `--fecha`.
 
-## Etapa 8 — Pruebas automáticas (0,2 puntos)
+## Etapa 7 — Pruebas automáticas (0,3 puntos)
 
 > 📖 **Definición**
 >
@@ -284,13 +237,14 @@ módulos, no implementar un parser desde cero.
 Cree `tests/test_sensores.py` con al menos estas pruebas:
 
 1. Una temperatura bajo cero es riesgosa.
-2. Un viento normal no es riesgoso.
-3. Una lectura físicamente imposible levanta `LecturaInvalidaError`.
-4. Menos de 20 lecturas válidas levanta `DatosInsuficientesError`.
+2. Una temperatura templada no es riesgosa.
+3. Un viento normal no es riesgoso.
+4. `contar_riesgos` devuelve el conteo esperado para un conjunto pequeño de
+   lecturas escrito a mano en la prueba.
 
 Los nombres del archivo y de las funciones deben comenzar con `test_`.
-En cada prueba use `assert` para expresar el resultado esperado. Para los casos
-que deben fallar, use `pytest.raises(...)` y compruebe la excepción específica.
+En cada prueba use `assert` para expresar el resultado esperado. Una prueba no
+debe limitarse a ejecutar el código: debe afirmar qué resultado se esperaba.
 
 > 🧪 **Comprobación**
 >
@@ -299,8 +253,9 @@ que deben fallar, use `pytest.raises(...)` y compruebe la excepción específica
 ## Preguntas de salida (0,6 puntos)
 
 Responda en el notebook las tres preguntas marcadas como preguntas de salida.
-Cada una vale `0,2` puntos. Se evaluará la comprensión de la idea, no la
-redacción exacta de la respuesta.
+Cada una vale `0,2` puntos. Dos se responden sobre el mini proyecto y la
+tercera, sobre excepciones, se resuelve completamente dentro del notebook. Se
+evaluará la comprensión de la idea, no la redacción exacta de la respuesta.
 
 ## Verificación final
 
@@ -315,7 +270,7 @@ uv run python main.py --fecha 2026-06-16
 ```
 
 El formato exacto del texto del reporte no es obligatorio. Sí deben ser
-correctos los conteos, las lecturas descartadas y el uso de la fecha.
+correctos los conteos y el uso de la fecha.
 
 ## Entrega
 
