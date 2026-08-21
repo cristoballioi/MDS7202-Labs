@@ -1,0 +1,52 @@
+[project]
+name = "pixellab-tarea"
+version = "0.1.0"
+description = "Material inicial del mini proyecto del Laboratorio 3"
+requires-python = ">=3.13"
+dependencies = [
+    "altair>=5.5.0",
+    "matplotlib>=3.11.1",
+    "numpy>=2.4.6",
+    "pandas>=2.2.0",
+    "pillow>=12.3.0",
+    "scipy>=1.16.1",
+    "streamlit>=1.61.1",
+]
+
+[dependency-groups]
+dev = ["ipykernel>=6.30.0", "pytest>=9.1.1", "ruff>=0.16.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.pixellab...`, igual que app.py.
+pythonpath = ["."]
+markers = [
+    "etapa2: pruebas del constructor de la clase Imagen",
+    "etapa3: pruebas de los operadores de Imagen",
+    "etapa4: pruebas del procesamiento básico",
+    "etapa5: pruebas de flip, saturación y contraste",
+    "etapa6: pruebas de convolución y kernels",
+    "etapa7: comprobación opcional de integración con la app Streamlit",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks son material docente: no se reformatean como módulos Python.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "C4",
+    "UP",
+    "SIM",
+    "RUF",
+    "PT",
+    "PTH",
+]
+ignore = ["E501", "RUF003"]
