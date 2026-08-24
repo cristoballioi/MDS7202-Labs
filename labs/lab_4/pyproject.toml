@@ -1,0 +1,66 @@
+[project]
+name = "meteolab-tarea"
+version = "0.1.0"
+description = "Material inicial del Laboratorio 4"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.2",
+    "pandera[polars]>=0.32.1",
+    "plotly>=6.9.0",
+    "polars>=1.44.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "pre-commit>=4.6.1",
+    "pyright>=1.1.406",
+    "pytest>=9.1.1",
+    "ruff>=0.16.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.meteolab...`, igual que el notebook.
+pythonpath = ["."]
+markers = [
+    "etapa1: pruebas de exploración e invariantes del dataset",
+    "etapa2: pruebas de lectura CSV y lazy",
+    "etapa3: pruebas del esquema y su validación",
+    "etapa4: pruebas de limpieza, nulos y claves",
+    "etapa5: pruebas de fechas y agregaciones mensuales",
+    "etapa6: pruebas de ventanas y anomalías",
+    "etapa7: pruebas del pipeline lazy y análisis climático",
+]
+# Pandera 0.32 todavía llama a `pl.concat(how="horizontal")` con alturas
+# distintas al armar su tabla de fallas. Es ruido de la librería, no del
+# laboratorio, y confunde al leer la salida de pytest.
+filterwarnings = [
+    "ignore:the default behavior of `how='horizontal'`:DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks y los .md son material docente: su código usa alineación
+# deliberada para leerse mejor y no debe reformatearse. Los `.py` de
+# `notebooks/` son la fuente jupytext de los notebooks, no módulos.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "C4",
+    "UP",
+    "SIM",
+    "RUF",
+    "PT",
+    "PTH",
+]
+ignore = ["E501", "RUF003"]
