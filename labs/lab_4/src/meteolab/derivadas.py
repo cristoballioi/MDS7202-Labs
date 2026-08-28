@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
-from src.meteolab.constantes import Tabla
+import polars as pl
+
+from src.meteolab.constantes import MESES, Tabla
 
 
 def agregar_fecha_mensual(mensuales: Tabla) -> Tabla:
     """Agrega month y una fecha nativa de Polars."""
-    raise NotImplementedError(
-        "Completen agregar_fecha_mensual antes de ejecutar el programa."
-    )
+    return mensuales.with_columns(
+        pl.col("period")
+        .replace_strict(MESES, return_dtype=pl.Int8)
+        .alias("month")
+    ).with_columns(pl.date(pl.col("year"), pl.col("month"), 1).alias("fecha"))

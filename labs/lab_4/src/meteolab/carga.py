@@ -2,22 +2,22 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import polars as pl
 
-from src.meteolab.constantes import RUTA_CSV
 
-
-def leer_temperaturas(ruta: Path = RUTA_CSV) -> pl.DataFrame:
-    """Lee el CSV CRU con sus tipos y valores faltantes."""
-    raise NotImplementedError(
-        "Completen leer_temperaturas antes de ejecutar el programa."
+def leer_temperaturas(ruta):
+    # Usamos read_csv para leer el archivo de forma eager
+    # Aplicamos schema_overrides para forzar los tipos de dato de año y temperatura
+    return pl.read_csv(
+        str(ruta),
+        schema_overrides={"year": pl.Int64, "temperature_c": pl.Float64},
     )
 
 
-def escanear_temperaturas(ruta: Path = RUTA_CSV) -> pl.LazyFrame:
-    """Construye una consulta lazy sobre el CSV."""
-    raise NotImplementedError(
-        "Completen escanear_temperaturas antes de ejecutar el programa."
+def escanear_temperaturas(ruta):
+    # Usamos scan_csv para crear un plan de consulta de forma lazy
+    # Tambien aplicamos schema_overrides para mantener consistencia con la lectura eager
+    return pl.scan_csv(
+        str(ruta),
+        schema_overrides={"year": pl.Int64, "temperature_c": pl.Float64},
     )
