@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.prefect/
+data/lake/*
+!data/lake/.gitignore
+data/processed/*
+!data/processed/.gitignore
+reports/figures/*
+!reports/figures/.gitignore

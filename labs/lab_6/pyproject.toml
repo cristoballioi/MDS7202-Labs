@@ -1,0 +1,43 @@
+[project]
+name = "pudulake"
+version = "0.1.0"
+description = "Proyecto del Laboratorio 6: pipeline local de Pudubella"
+requires-python = ">=3.13"
+dependencies = [
+    "duckdb>=1.5.0",
+    "jupyterlab>=4.6.2",
+    "polars>=1.44.0",
+    "prefect>=3.4.10",
+    "pyarrow>=20.0.0",
+    "pyyaml>=6.0.2",
+    "rich>=14.0.0",
+    "typer>=0.21.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "pytest>=9.1.1",
+    "ruff>=0.16.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "etapa1: pruebas de ingesta y persistencia Bronze",
+    "etapa2: pruebas de Silver, contratos y calidad",
+    "etapa3: pruebas de productos Gold",
+    "etapa4: pruebas de orquestación y gobernanza",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RUF", "PT", "PTH"]
+ignore = ["E501", "RUF003"]

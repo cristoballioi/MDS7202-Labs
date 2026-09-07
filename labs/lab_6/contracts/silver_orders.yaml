@@ -1,0 +1,11 @@
+table: silver.orders
+purpose: ""
+grain: ""
+primary_key: []
+owner: ""
+lineage: []
+classification: ""
+required_columns: []
+column_types: {}
+allow_empty: false
+constraints: {}
