@@ -1,11 +1,27 @@
 table: silver.customers
-purpose: ""
-grain: ""
-primary_key: []
-owner: ""
-lineage: []
-classification: ""
-required_columns: []
-column_types: {}
+purpose: >
+  Mapear cada customer_id (un perfil por orden) a su customer_unique_id
+  (la persona real), para poder agrupar compras del mismo cliente.
+grain: Una fila por customer_id.
+primary_key:
+  - customer_id
+owner: equipo-datos-pudubella
+lineage:
+  - bronze.customers
+classification: internal
+required_columns:
+  - customer_id
+  - customer_unique_id
+  - customer_zip_code_prefix
+  - customer_city
+  - customer_state
+column_types:
+  customer_id: string
+  customer_unique_id: string
 allow_empty: false
-constraints: {}
+constraints:
+  customer_id:
+    nullable: false
+    unique: true
+  customer_unique_id:
+    nullable: false

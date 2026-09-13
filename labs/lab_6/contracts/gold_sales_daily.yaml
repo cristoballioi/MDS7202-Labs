@@ -1,11 +1,32 @@
 table: gold.sales_daily
-purpose: ""
-grain: ""
-primary_key: []
-owner: ""
-lineage: []
-classification: ""
-required_columns: []
-column_types: {}
+purpose: >
+  Resumir el valor de los ítems vendidos y el número de órdenes
+  entregadas por día de compra, para reportes de ventas.
+grain: Una fila por sale_date.
+primary_key:
+  - sale_date
+owner: equipo-datos-pudubella
+lineage:
+  - silver.orders
+  - silver.order_items
+classification: internal
+required_columns:
+  - sale_date
+  - items_sold_value
+  - delivered_orders
+column_types:
+  sale_date: date
+  items_sold_value: float
+  delivered_orders: integer
 allow_empty: false
-constraints: {}
+constraints:
+  sale_date:
+    nullable: false
+    unique: true
+  items_sold_value:
+    nullable: false
+    minimum: 0
+    finite: true
+  delivered_orders:
+    nullable: false
+    minimum: 0

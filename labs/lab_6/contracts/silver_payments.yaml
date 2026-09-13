@@ -1,11 +1,28 @@
 table: silver.payments
-purpose: ""
-grain: ""
-primary_key: []
-owner: ""
-lineage: []
-classification: ""
-required_columns: []
-column_types: {}
+purpose: >
+  Conservar los pagos de cada orden con montos verificados (sin
+  negativos ni valores no finitos) para calcular RFM y exclusiones.
+grain: Una fila por (order_id, payment_sequential).
+primary_key:
+  - order_id
+  - payment_sequential
+owner: equipo-datos-pudubella
+lineage:
+  - bronze.payments
+classification: internal
+required_columns:
+  - order_id
+  - payment_sequential
+  - payment_value
+column_types:
+  order_id: string
+  payment_sequential: integer
+  payment_value: float
 allow_empty: false
-constraints: {}
+constraints:
+  order_id:
+    nullable: false
+  payment_value:
+    nullable: false
+    minimum: 0
+    finite: true
