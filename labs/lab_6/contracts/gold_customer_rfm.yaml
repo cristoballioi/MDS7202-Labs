@@ -1,0 +1,50 @@
+table: gold.customer_rfm
+purpose: >
+  Segmentar clientes según recencia, frecuencia y monto de sus compras
+  entregadas y pagadas, para campañas de marketing dirigidas.
+grain: Una fila por customer_unique_id.
+primary_key:
+  - customer_unique_id
+owner: equipo-datos-pudubella
+lineage:
+  - silver.orders
+  - silver.customers
+  - silver.payments
+classification: internal
+required_columns:
+  - customer_unique_id
+  - last_purchase
+  - frequency
+  - monetary
+  - recency_days
+  - segment
+column_types:
+  customer_unique_id: string
+  last_purchase: datetime
+  frequency: integer
+  monetary: float
+  recency_days: integer
+  segment: string
+allow_empty: false
+constraints:
+  customer_unique_id:
+    nullable: false
+    unique: true
+  frequency:
+    nullable: false
+    minimum: 1
+  monetary:
+    nullable: false
+    minimum: 0
+    finite: true
+  recency_days:
+    nullable: false
+    minimum: 0
+  segment:
+    nullable: false
+    allowed_values:
+      - Champions
+      - Loyal
+      - New
+      - Lost
+      - Other

@@ -1,0 +1,31 @@
+table: gold.rfm_exclusions
+purpose: >
+  Registrar las órdenes entregadas sin pago, para que queden fuera del
+  cálculo de RFM sin perder trazabilidad de por qué se excluyeron.
+grain: Una fila por order_id excluida.
+primary_key:
+  - order_id
+owner: equipo-datos-pudubella
+lineage:
+  - silver.orders
+  - silver.payments
+classification: internal
+required_columns:
+  - order_id
+  - customer_id
+  - order_purchase_timestamp
+  - reason
+column_types:
+  order_id: string
+  customer_id: string
+  order_purchase_timestamp: datetime
+  reason: string
+allow_empty: true
+constraints:
+  order_id:
+    nullable: false
+    unique: true
+  reason:
+    nullable: false
+    allowed_values:
+      - delivered_order_without_payment

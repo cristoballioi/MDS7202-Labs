@@ -1,0 +1,11 @@
+segments:
+  champions:
+    max_recency_days: 90
+    min_frequency: 2
+    min_monetary: 320.0
+  loyal:
+    min_frequency: 2
+  new:
+    max_recency_days: 30
+  lost:
+    min_recency_days: 365
