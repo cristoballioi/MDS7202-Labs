@@ -1,0 +1,26 @@
+# El tema de su panel. Vale 0,4 puntos de la Parte 2.
+#
+# Streamlit lee este archivo solo: no hay que importarlo ni referenciarlo
+# desde el `.py`. Tiene que quedar en la entrega, en esta misma ruta.
+#
+# Tal como está, con todo comentado, el panel se ve con el tema de fábrica.
+# Descomenten lo que quieran usar y decidan sus colores. No hay una respuesta
+# correcta; lo que se corrige es que hayan decidido algo y que el panel no se
+# vea como el de fábrica.
+#
+# Referencia completa de las claves y de las variantes por modo claro/oscuro:
+#   https://docs.streamlit.io/develop/concepts/configuration/theming
+#   https://docs.streamlit.io/develop/api-reference/configuration/config.toml
+
+# [theme]
+# # De cuál de los dos temas de fábrica se parte: "light" u "dark".
+# base = ""
+# # El color de acento: botones, controles, enlaces.
+# primaryColor = ""
+# backgroundColor = ""
+# secondaryBackgroundColor = ""
+# textColor = ""
+
+# La barra lateral admite su propio tratamiento, si la usan para los filtros.
+# [theme.sidebar]
+# primaryColor = ""
