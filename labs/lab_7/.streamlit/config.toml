@@ -12,15 +12,15 @@
 #   https://docs.streamlit.io/develop/concepts/configuration/theming
 #   https://docs.streamlit.io/develop/api-reference/configuration/config.toml
 
-# [theme]
+
 # # De cuál de los dos temas de fábrica se parte: "light" u "dark".
-# base = ""
-# # El color de acento: botones, controles, enlaces.
-# primaryColor = ""
-# backgroundColor = ""
-# secondaryBackgroundColor = ""
-# textColor = ""
+[theme]
+base = "dark"
+primaryColor = "#0f9e99"
+backgroundColor = "#121212"
+secondaryBackgroundColor = "#1e1e1e"
+textColor = "#fafafa"
 
 # La barra lateral admite su propio tratamiento, si la usan para los filtros.
-# [theme.sidebar]
-# primaryColor = ""
+[theme.sidebar]
+primaryColor = "#f0883e"
