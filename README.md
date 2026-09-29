@@ -6,8 +6,8 @@ Repositorio del curso MDS7202 (Otoño 2026), Facultad de Ciencias Físicas y Mat
 
 | Nombre | GitHub |
 |--------|--------|
-| Nombre Apellido 1 | [@cristoballioi](https://github.com/cristoballioi) |
-| Nombre Apellido 2 | [@jbadilla10](https://github.com/jbadilla10) |
+| Cristóbal Lioi | [@cristoballioi](https://github.com/cristoballioi) |
+| Julio Badilla | [@jbadilla10](https://github.com/jbadilla10) |
 
 ## Estructura del repositorio
 
