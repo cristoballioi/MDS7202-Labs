@@ -1,0 +1,47 @@
+[project]
+name = "heroverse"
+version = "0.1.0"
+description = "Proyecto del Laboratorio 8: representaciones de personajes de cómic"
+requires-python = ">=3.13"
+dependencies = [
+    "fg-data-profiling>=4.20.0",
+    "jupyterlab>=4.6.2",
+    "plotly>=6.9.0",
+    "polars>=1.44.0",
+    "pyarrow>=20.0.0",
+    "scikit-learn>=1.7.0",
+    "scipy>=1.16.0",
+    "umap-learn>=0.5.9",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "pytest>=9.1.1",
+    "ruff>=0.16.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.heroverse...`, igual que el notebook.
+pythonpath = ["."]
+markers = [
+    "etapa1: pruebas de features y preprocesador tabular",
+    "etapa2: pruebas de escalamiento y vecinos",
+    "etapa3: pruebas de codificación de texto",
+    "etapa4: sin pruebas; se comprueba observando las proyecciones",
+    "etapa5: pruebas de clustering y equivalentes",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks y los .md son material docente. Sin esta exclusión,
+# ruff-format reescribe el .py pareado y rompe el par dentro del commit.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RUF", "PT", "PTH"]
+ignore = ["E501", "RUF003"]
