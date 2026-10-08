@@ -15,6 +15,15 @@ def a_formato_ancho(df_largo: pl.DataFrame) -> pl.DataFrame:
     trae una fila por imagen, con una columna por cada nombre de
     `OBJETIVOS` y los metadatos conservados sin duplicar.
     """
-    raise NotImplementedError(
-        "Completen a_formato_ancho antes de ejecutar el programa."
+    columnas_indice = [
+        col
+        for col in df_largo.columns
+        if col not in ["sample_id", "target_name", "target"]
+    ]
+
+    df_pivoteado = df_largo.pivot(
+        index=columnas_indice, on="target_name", values="target"
     )
+
+    # Usamos OBJETIVOS para ordenar las columnas finales y así evitamos que el editor borre la importación
+    return df_pivoteado.select(columnas_indice + OBJETIVOS)
