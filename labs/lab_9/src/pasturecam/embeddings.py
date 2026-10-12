@@ -16,9 +16,22 @@ def dividir_en_tiles(imagen: Image.Image, n: int) -> list[Image.Image]:
     para cubrir el resto que deja la división entera. Juntos, los tiles
     cubren exactamente el cuadrante original.
     """
-    raise NotImplementedError(
-        "Completen dividir_en_tiles antes de ejecutar el programa."
-    )
+    # Ancho de cada tile con división entera (el resto lo absorbe el último).
+    ancho_tile = imagen.width // n
+
+    tiles = []
+    # Un `for` es válido aquí: se recorren tiles, no filas de una tabla.
+    for i in range(n):
+        # Borde izquierdo: cada tile parte donde terminó el anterior, así no
+        # hay solape ni huecos entre ellos.
+        izquierda = i * ancho_tile
+        # Borde derecho: el último tile llega hasta el final de la imagen para
+        # incluir los píxeles sobrantes si el ancho no es divisible por n.
+        derecha = imagen.width if i == n - 1 else (i + 1) * ancho_tile
+        # `crop` recibe (izquierda, arriba, derecha, abajo); usamos el alto
+        # completo de la imagen en todos los tiles.
+        tiles.append(imagen.crop((izquierda, 0, derecha, imagen.height)))
+    return tiles
 
 
 def extraer_embeddings(
@@ -38,6 +51,35 @@ def extraer_embeddings(
     calcular gradientes. El resultado es un arreglo `(len(rutas),
     dimensión)`.
     """
-    raise NotImplementedError(
-        "Completen extraer_embeddings antes de ejecutar el programa."
-    )
+    # Sin imágenes no hay nada que concatenar: devolvemos un arreglo vacío.
+    if not rutas:
+        return np.empty((0, 0), dtype=np.float32)
+
+    embeddings_por_lote = []
+
+    # `no_grad` desactiva el cálculo de gradientes: solo hacemos inferencia,
+    # así ahorramos memoria y tiempo (el extractor está congelado).
+    with torch.no_grad():
+        # Recorremos las rutas de a `tamano_lote` imágenes para no cargar las
+        # 357 fotos en memoria a la vez.
+        for inicio in range(0, len(rutas), tamano_lote):
+            rutas_lote = rutas[inicio : inicio + tamano_lote]
+
+            tensores = []
+            for ruta in rutas_lote:
+                # Se abre cada foto, se pasa a RGB (por si viniera en otro
+                # modo) y se le aplica el preprocesamiento del extractor.
+                with Image.open(ruta) as imagen:
+                    tensores.append(transformacion(imagen.convert("RGB")))
+
+            # Se apilan los tensores de las imágenes en un solo lote
+            # `(lote, canales, alto, ancho)`.
+            lote = torch.stack(tensores)
+            # El extractor devuelve un embedding por imagen: `(lote, dim)`.
+            salida = modelo(lote)
+            # Pasamos a NumPy (en CPU) para poder concatenar al final.
+            embeddings_por_lote.append(salida.cpu().numpy())
+
+    # Se unen los lotes en orden: queda una fila por imagen, en el mismo orden
+    # que `rutas`.
+    return np.concatenate(embeddings_por_lote, axis=0)
