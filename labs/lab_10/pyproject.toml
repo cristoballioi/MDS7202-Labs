@@ -1,0 +1,47 @@
+[project]
+name = "radio-fcfm"
+version = "0.1.0"
+description = "Proyecto del Laboratorio 10: ánimo de canciones desde sus letras"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.2",
+    "mlflow>=3.0.0",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "plotly>=6.9.0",
+    "polars>=1.44.0",
+    "scikit-learn>=1.7.0",
+    "typesafe-sdk>=0.7.5",
+    "wordcloud>=1.9.4",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "pytest>=9.1.1",
+    "ruff>=0.16.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.radio_fcfm...`, igual que el notebook.
+pythonpath = ["."]
+markers = [
+    "etapa1: pruebas de limpieza de letras, de la partición del test y del registro de experimentos",
+    "etapa2: pruebas del pipeline de texto",
+    "etapa3: pruebas de métricas por franja de programación",
+    "etapa4: pruebas de la predicción sobre canciones nuevas y del apoyo para llamar a Jev",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks y los .md son material docente. Sin esta exclusión,
+# ruff-format reescribe el .py pareado y rompe el par dentro del commit.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RUF", "PT", "PTH"]
+ignore = ["E501", "RUF003"]
