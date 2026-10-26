@@ -2,6 +2,10 @@
 
 from collections.abc import Sequence
 
+import polars as pl
+
+from src.radio_fcfm.contratos import FRANJAS
+
 
 def a_franja(estado: str) -> str:
     """Devuelve la franja de programación en que suena un estado de ánimo.
@@ -11,9 +15,14 @@ def a_franja(estado: str) -> str:
     Si `estado` no es uno de los cuatro estados de MoodyLyrics4Q, levanta un
     `ValueError` que nombra el estado desconocido.
     """
-    raise NotImplementedError(
-        "Completen a_franja antes de ejecutar el programa."
-    )
+    # Un ánimo fuera de los cuatro no tiene franja: se avisa con un error que
+    # lo nombra, en vez de devolver algo inventado.
+    if estado not in FRANJAS:
+        raise ValueError(
+            f"Estado de ánimo desconocido: {estado!r}. "
+            f"Los válidos son {sorted(FRANJAS)}."
+        )
+    return FRANJAS[estado]
 
 
 def acierto_por_franja(y_real: Sequence[str], y_pred: Sequence[str]) -> float:
@@ -25,6 +34,33 @@ def acierto_por_franja(y_real: Sequence[str], y_pred: Sequence[str]) -> float:
     `ValueError`. El resultado va entre 0 y 1 y, como fusionar estados solo
     elimina errores, nunca es menor que el accuracy de los cuatro estados.
     """
-    raise NotImplementedError(
-        "Completen acierto_por_franja antes de ejecutar el programa."
+    # Las dos listas deben describir las mismas canciones, una a una.
+    if len(y_real) != len(y_pred):
+        raise ValueError(
+            "y_real e y_pred deben tener el mismo largo: "
+            f"{len(y_real)} != {len(y_pred)}."
+        )
+
+    # Antes de mapear, se revisa que todos los ánimos existan; si alguno no,
+    # `a_franja` levanta el ValueError que lo nombra.
+    desconocidos = sorted({*map(str, y_real), *map(str, y_pred)} - set(FRANJAS))
+    if desconocidos:
+        a_franja(desconocidos[0])
+
+    # Se pasa cada ánimo a su franja con una expresión de Polars (sin `for`
+    # sobre las canciones) y se calcula la fracción de franjas iguales.
+    tabla = pl.DataFrame(
+        {
+            "real": [str(e) for e in y_real],
+            "predicho": [str(e) for e in y_pred],
+        },
+        schema={"real": pl.String, "predicho": pl.String},
     )
+    iguales = tabla.select(
+        (
+            pl.col("real").replace_strict(FRANJAS)
+            == pl.col("predicho").replace_strict(FRANJAS)
+        ).mean()
+    ).item()
+    # Con cero canciones no hay nada que acertar: se devuelve 0,0.
+    return float(iguales) if iguales is not None else 0.0
