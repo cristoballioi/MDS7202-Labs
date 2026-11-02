@@ -1,0 +1,46 @@
+[project]
+name = "agroweather"
+version = "0.1.0"
+description = "Laboratorio 11: pronóstico de heladas en Curicó"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.2",
+    "lightgbm>=4.7.0",
+    "mlflow>=3.17,<4",
+    "numpy>=2.4.6",
+    "optuna>=4.9.0",
+    "plotly>=6.9.0",
+    "polars>=1.44.0",
+    "scikit-learn>=1.9.0",
+    "shap>=0.54.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "pytest>=9.1.1",
+    "ruff>=0.16.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.agroweather...`, igual que el notebook.
+pythonpath = ["."]
+markers = [
+    "etapa3: pruebas de partición temporal y baselines",
+    "etapa4: pruebas de folds y backtesting",
+    "etapa5: pruebas de Optuna y de la alerta de helada",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks son material docente. Sin esta exclusión, ruff-format
+# reescribe el .py pareado y rompe el par dentro del commit.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RUF", "PT", "PTH"]
+ignore = ["E501", "RUF003"]

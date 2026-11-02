@@ -1,0 +1,11 @@
+Datos: estación meteorológica de Curicó (id 85629), compilados con Meteostat
+2.1.5 el 28 de octubre de 2026.
+
+- ISD-Lite (NOAA): dominio público (CC0).
+- METAR: Meteostat no declara una licencia propia para estos reportes. La
+  redistribución del archivo fuera del curso requiere confirmar esos términos
+  con la fuente antes de publicarlo.
+- Meteostat: citar https://meteostat.net/ como fuente de la compilación.
+
+Este archivo describe la licencia de los datos, no la del material docente del
+laboratorio.
