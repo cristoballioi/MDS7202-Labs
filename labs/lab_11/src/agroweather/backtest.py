@@ -79,9 +79,7 @@ def temporal_split(
     inicio_val = _a_datetime(inicio_validation)
     inicio_tst = _a_datetime(inicio_test)
     if inicio_tst <= inicio_val:
-        raise ValueError(
-            "inicio_test debe ser posterior a inicio_validation"
-        )
+        raise ValueError("inicio_test debe ser posterior a inicio_validation")
 
     # --- Asignación por la hora del TARGET, no por la del origen ---
     adelanto = timedelta(hours=horizonte)
@@ -220,11 +218,7 @@ def daily_persistence_forecast(
 
     # Hora de "ayer a la hora del target": hora + horizonte - 24.
     ayer = pl.DataFrame(
-        {
-            "hora": X["hora"]
-            + timedelta(hours=horizonte)
-            - timedelta(hours=24)
-        }
+        {"hora": X["hora"] + timedelta(hours=horizonte) - timedelta(hours=24)}
     )
     # Left join conservando el orden de X: una fila por fila de X. Si la
     # estación no informó esa hora, la temperatura queda en null (no se
@@ -476,9 +470,7 @@ def mejor_umbral(
     # primer candidato que alcanza el costo mínimo es el más bajo.
     for umbral in np.unique(pron_np):
         alerta = pron_np < umbral
-        costo = costo_alerta(
-            real_np, alerta, costo_por_alerta, costo_helada
-        )
+        costo = costo_alerta(real_np, alerta, costo_por_alerta, costo_helada)
         if costo < mejor_costo:
             mejor_u, mejor_costo = float(umbral), float(costo)
     return mejor_u, mejor_costo

@@ -5,6 +5,8 @@ from __future__ import annotations
 import optuna
 import polars as pl
 
+from .backtest import mae, make_model, walk_forward
+
 
 def suggest_params(trial: optuna.Trial) -> dict:
     """Define el espacio de búsqueda de LightGBM.
@@ -24,9 +26,23 @@ def suggest_params(trial: optuna.Trial) -> dict:
     al construir las variables y se mantienen fijas para que la comparación
     entre trials sea justa.
     """
-    raise NotImplementedError(
-        "Completen suggest_params antes de ejecutar esta celda."
-    )
+    # El orden de las sugerencias importa: TPE con semilla fija propone los
+    # mismos valores solo si el espacio se declara siempre en el mismo orden.
+    return {
+        # Hojas por árbol: escala log porque importa el cambio relativo.
+        "num_leaves": trial.suggest_int("num_leaves", 8, 64, log=True),
+        "learning_rate": trial.suggest_float(
+            "learning_rate", 0.01, 0.2, log=True
+        ),
+        # Cantidad de árboles, de 50 en 50.
+        "n_estimators": trial.suggest_int("n_estimators", 100, 600, step=50),
+        "min_child_samples": trial.suggest_int("min_child_samples", 10, 100),
+        # Fracción de filas y de features que ve cada árbol.
+        "subsample": trial.suggest_float("subsample", 0.6, 1.0),
+        "colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+        # Regularización L2: varía en varios órdenes de magnitud (escala log).
+        "reg_lambda": trial.suggest_float("reg_lambda", 1e-3, 10.0, log=True),
+    }
 
 
 def objective(
@@ -43,9 +59,14 @@ def objective(
     predicciones fuera de fold juntas: un fold con más horas aporta más filas
     al promedio, sin que haya que ponderar nada a mano.
     """
-    raise NotImplementedError(
-        "Completen objective antes de ejecutar esta celda."
-    )
+    # Hiperparámetros propuestos por Optuna para este trial.
+    parametros = suggest_params(trial)
+    # Backtest con ventana expansiva sobre el período de desarrollo (nunca
+    # test): cada fold ajusta un modelo nuevo con esos parámetros.
+    resultados = walk_forward(X, y, make_model(**parametros), folds)
+    # MAE global: todas las predicciones fuera de fold juntas, de modo que un
+    # fold con más filas pesa más sin ponderar a mano.
+    return mae(resultados["real"], resultados["pronostico"])
 
 
 def tune_model(
@@ -56,6 +77,16 @@ def tune_model(
     seed: int = 42,
 ) -> optuna.Study:
     """Crea y ejecuta un estudio Optuna que minimiza el MAE fuera de fold."""
-    raise NotImplementedError(
-        "Completen tune_model antes de ejecutar esta celda."
+    if n_trials < 1:
+        raise ValueError("n_trials debe ser al menos 1")
+
+    # Estudio que minimiza el MAE, con TPE y semilla fija para que la
+    # búsqueda sea reproducible.
+    estudio = optuna.create_study(
+        direction="minimize",
+        sampler=optuna.samplers.TPESampler(seed=seed),
     )
+    estudio.optimize(
+        lambda trial: objective(trial, X, y, folds), n_trials=n_trials
+    )
+    return estudio
