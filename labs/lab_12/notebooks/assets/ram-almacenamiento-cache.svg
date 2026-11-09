@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" role="img" aria-labelledby="ram-cache-title ram-cache-desc">
+  <title id="ram-cache-title">Leer Parquet: almacenamiento, RAM y CPU</title>
+  <desc id="ram-cache-desc">El SSD conserva el archivo Parquet. Sus bytes pueden quedar en la caché de archivos de la RAM. La CPU ejecuta la lectura, decodifica esos bytes y construye una tabla en RAM; después procesa sus valores. La caché propia de la CPU es distinta de la caché de archivos. Una segunda lectura puede reutilizar los bytes en RAM sin volver al SSD, aunque aún debe decodificarlos.</desc>
+  <defs>
+    <marker id="ram-cache-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#57606a"/></marker>
+  </defs>
+  <rect width="960" height="660" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="700">Leer Parquet: almacenamiento, RAM y CPU</text>
+    <text x="32" y="83" font-size="16">Guardar bytes, decodificarlos y procesar una tabla son trabajos distintos.</text>
+
+    <rect x="32" y="130" width="210" height="280" rx="10" fill="#fff8c5" stroke="#57606a" stroke-width="2"/>
+    <text x="48" y="162" font-size="18" font-weight="700">SSD</text>
+    <text x="48" y="188" font-size="16">Almacenamiento</text>
+    <text x="48" y="210" font-size="16">persistente</text>
+    <rect x="48" y="245" width="178" height="84" rx="6" fill="#ffffff" stroke="#57606a"/>
+    <text x="137" y="278" text-anchor="middle" font-size="17" font-weight="700">Archivo Parquet</text>
+    <text x="137" y="306" text-anchor="middle" font-size="16">Bytes codificados</text>
+    <text x="48" y="363" font-size="16">Conserva el archivo</text>
+    <text x="48" y="386" font-size="16">al apagar el equipo.</text>
+
+    <rect x="320" y="130" width="326" height="420" rx="10" fill="#ddf4ff" stroke="#57606a" stroke-width="2"/>
+    <text x="340" y="162" font-size="18" font-weight="700">RAM · memoria de trabajo</text>
+    <rect x="340" y="192" width="286" height="117" rx="6" fill="#ffffff" stroke="#57606a"/>
+    <text x="358" y="223" font-size="17" font-weight="700">Caché de archivos del SO</text>
+    <text x="358" y="250" font-size="16">Bytes del archivo Parquet</text>
+    <text x="358" y="279" font-size="14">Aún no son la tabla decodificada.</text>
+    <rect x="340" y="360" width="286" height="130" rx="6" fill="#dafbe1" stroke="#57606a"/>
+    <text x="358" y="392" font-size="17" font-weight="700">Tabla ya decodificada</text>
+    <text x="358" y="421" font-size="16">Valores y tipos en memoria</text>
+    <text x="358" y="452" font-size="14">Su tamaño puede diferir del archivo.</text>
+    <text x="340" y="525" font-size="16">Pierde su contenido al apagar.</text>
+
+    <rect x="722" y="130" width="206" height="420" rx="10" fill="#dafbe1" stroke="#57606a" stroke-width="2"/>
+    <text x="740" y="162" font-size="18" font-weight="700">CPU</text>
+    <text x="740" y="197" font-size="16">Ejecuta la lectura.</text>
+    <text x="740" y="237" font-size="16">Decodifica los bytes</text>
+    <text x="740" y="260" font-size="16">y construye la tabla</text>
+    <text x="740" y="283" font-size="16">en RAM.</text>
+    <text x="740" y="388" font-size="16">Procesa los valores.</text>
+    <rect x="738" y="457" width="174" height="76" rx="6" fill="#fff8c5" stroke="#57606a"/>
+    <text x="750" y="483" font-size="16" font-weight="700">Caché de CPU</text>
+    <text x="750" y="507" font-size="14">Datos e instrucciones</text>
+    <text x="750" y="525" font-size="14">cerca del procesador</text>
+
+    <g fill="none" stroke="#57606a" stroke-width="2" marker-end="url(#ram-cache-arrow)">
+      <path d="M226 285 H340"/>
+      <path d="M626 250 H722"/>
+      <path d="M722 334 H674 V380 H626"/>
+      <path d="M626 425 H722"/>
+    </g>
+    <text x="282" y="270" text-anchor="middle" font-size="14">lectura</text>
+    <text x="674" y="234" text-anchor="middle" font-size="14">bytes</text>
+    <text x="674" y="323" text-anchor="middle" font-size="14">escribe</text>
+    <text x="674" y="449" text-anchor="middle" font-size="14">valores</text>
+
+    <text x="32" y="590" font-size="16">Una segunda lectura puede usar la caché de archivos en RAM sin volver al SSD.</text>
+    <text x="32" y="616" font-size="16">Todavía requiere CPU para decodificar. La capacidad de memoria no es un tiempo de lectura.</text>
+    <text x="32" y="641" font-size="14">SO: sistema operativo. Las flechas muestran el recorrido de los datos, no velocidades ni tamaños.</text>
+  </g>
+</svg>

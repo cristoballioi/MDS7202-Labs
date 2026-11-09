@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" role="img" aria-labelledby="nfl-title nfl-desc">
+  <title id="nfl-title">Núcleos físicos y procesadores lógicos</title>
+  <desc id="nfl-desc">Ejemplo de una CPU con dos núcleos físicos y SMT: cada núcleo contiene dos contextos de hardware, visibles como procesadores lógicos, que comparten sus recursos de ejecución. Seis hilos de software llegan a la planificación del sistema operativo, que los asigna por turnos a los cuatro procesadores lógicos, sin una asociación permanente. SMT no crea núcleos físicos adicionales ni garantiza duplicar la velocidad; no está presente en todas las CPU.</desc>
+  <defs>
+    <marker id="nfl-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8" fill="#57606a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="660" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="bold">Núcleos físicos y procesadores lógicos</text>
+    <text x="32" y="82" font-size="16">Ejemplo: 2 núcleos físicos y 4 procesadores lógicos con SMT.</text>
+
+    <text x="32" y="122" font-size="18" font-weight="bold">Hilos de software del programa</text>
+    <g font-size="16" text-anchor="middle">
+      <rect x="32" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="100" y="164">Hilo A</text>
+      <rect x="184" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="252" y="164">Hilo B</text>
+      <rect x="336" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="404" y="164">Hilo C</text>
+      <rect x="488" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="556" y="164">Hilo D</text>
+      <rect x="640" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="708" y="164">Hilo E</text>
+      <rect x="792" y="138" width="136" height="40" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+      <text x="860" y="164">Hilo F</text>
+    </g>
+    <path d="M100,178 V194 H860 V178 M252,178 V194 M404,178 V194 M556,178 V194 M708,178 V194" fill="none" stroke="#57606a" stroke-width="1.5"/>
+    <path d="M480,194 V220" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#nfl-arrow)"/>
+
+    <rect x="176" y="224" width="608" height="64" rx="8" fill="#fff8c5" stroke="#57606a"/>
+    <text x="480" y="250" text-anchor="middle" font-size="18" font-weight="bold">Planificación del sistema operativo</text>
+    <text x="480" y="274" text-anchor="middle" font-size="16">Asigna hilos por turnos; la asignación puede cambiar.</text>
+    <path d="M480,288 V316" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#nfl-arrow)"/>
+
+    <rect x="32" y="320" width="896" height="258" rx="10" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+    <text x="48" y="348" font-size="18" font-weight="bold">CPU · esquema de hardware</text>
+
+    <rect x="48" y="362" width="424" height="198" rx="8" fill="#dafbe1" stroke="#57606a"/>
+    <text x="64" y="390" font-size="18" font-weight="bold">Núcleo físico 1</text>
+    <rect x="64" y="404" width="188" height="56" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <rect x="268" y="404" width="188" height="56" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <g text-anchor="middle" font-size="16">
+      <text x="158" y="427">Procesador lógico 1</text>
+      <text x="158" y="449" font-size="14">Contexto SMT</text>
+      <text x="362" y="427">Procesador lógico 2</text>
+      <text x="362" y="449" font-size="14">Contexto SMT</text>
+    </g>
+    <path d="M158,460 V490 M362,460 V490" stroke="#57606a" stroke-width="1.5" marker-end="url(#nfl-arrow)"/>
+    <rect x="64" y="494" width="392" height="48" rx="6" fill="#ffffff" stroke="#57606a"/>
+    <text x="260" y="523" text-anchor="middle" font-size="16">Recursos de ejecución compartidos</text>
+
+    <rect x="488" y="362" width="424" height="198" rx="8" fill="#dafbe1" stroke="#57606a"/>
+    <text x="504" y="390" font-size="18" font-weight="bold">Núcleo físico 2</text>
+    <rect x="504" y="404" width="188" height="56" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <rect x="708" y="404" width="188" height="56" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <g text-anchor="middle" font-size="16">
+      <text x="598" y="427">Procesador lógico 3</text>
+      <text x="598" y="449" font-size="14">Contexto SMT</text>
+      <text x="802" y="427">Procesador lógico 4</text>
+      <text x="802" y="449" font-size="14">Contexto SMT</text>
+    </g>
+    <path d="M598,460 V490 M802,460 V490" stroke="#57606a" stroke-width="1.5" marker-end="url(#nfl-arrow)"/>
+    <rect x="504" y="494" width="392" height="48" rx="6" fill="#ffffff" stroke="#57606a"/>
+    <text x="700" y="523" text-anchor="middle" font-size="16">Recursos de ejecución compartidos</text>
+
+    <text x="32" y="611" font-size="16">Ejemplo con SMT: no duplica núcleos ni garantiza doble velocidad.</text>
+    <text x="32" y="636" font-size="14">SMT no está presente en todas las CPU. Puede haber más hilos de software que procesadores lógicos.</text>
+  </g>
+</svg>

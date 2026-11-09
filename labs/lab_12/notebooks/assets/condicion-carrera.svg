@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" role="img" aria-labelledby="cc-title cc-desc">
+  <title id="cc-title">Condición de carrera: una actualización perdida</title>
+  <desc id="cc-desc">Cronograma de una intercalación posible de dos hilos que incrementan un contador compartido, inicialmente en 5. Paso 1: A lee 5. Paso 2: B lee 5. Paso 3: A calcula 6. Paso 4: B calcula 6. Paso 5: A escribe 6. Paso 6: B escribe 6. El resultado es 6 en lugar del 7 esperado. El bloqueo debe proteger la lectura, la modificación y la escritura juntas.</desc>
+  <defs>
+    <marker id="cc-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8" fill="#57606a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="660" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="bold">Condición de carrera: una actualización perdida</text>
+    <text x="32" y="82" font-size="16">Dos hilos intentan sumar 1 al mismo contador. Valor inicial: 5.</text>
+    <text x="32" y="106" font-size="14">Una intercalación posible de las operaciones; no ocurre necesariamente en cada ejecución.</text>
+
+    <text x="48" y="148" font-size="14" text-anchor="middle">Tiempo</text>
+    <text x="268" y="148" font-size="18" font-weight="bold" text-anchor="middle">Hilo A</text>
+    <text x="526" y="141" font-size="16" font-weight="bold" text-anchor="middle">Contador</text>
+    <text x="526" y="162" font-size="14" text-anchor="middle">compartido · inicia en 5</text>
+    <text x="787" y="148" font-size="18" font-weight="bold" text-anchor="middle">Hilo B</text>
+
+    <path d="M48,175 V504" stroke="#57606a" stroke-width="1.5" marker-end="url(#cc-arrow)"/>
+    <g stroke="#57606a" stroke-opacity="0.22" stroke-dasharray="4 5">
+      <path d="M136,238 H914 M136,290 H914 M136,342 H914 M136,394 H914 M136,446 H914"/>
+    </g>
+    <g fill="#ffffff" stroke="#57606a">
+      <circle cx="96" cy="212" r="15"/><circle cx="96" cy="264" r="15"/>
+      <circle cx="96" cy="316" r="15"/><circle cx="96" cy="368" r="15"/>
+      <circle cx="96" cy="420" r="15"/><circle cx="96" cy="472" r="15"/>
+    </g>
+    <g font-size="16" text-anchor="middle">
+      <text x="96" y="218">1</text><text x="96" y="270">2</text>
+      <text x="96" y="322">3</text><text x="96" y="374">4</text>
+      <text x="96" y="426">5</text><text x="96" y="478">6</text>
+    </g>
+
+    <g fill="#ddf4ff" stroke="#57606a">
+      <rect x="136" y="192" width="254" height="40" rx="4"/>
+      <rect x="660" y="244" width="254" height="40" rx="4"/>
+      <rect x="136" y="296" width="254" height="40" rx="4"/>
+      <rect x="660" y="348" width="254" height="40" rx="4"/>
+      <rect x="136" y="400" width="254" height="40" rx="4"/>
+      <rect x="660" y="452" width="254" height="40" rx="4"/>
+    </g>
+    <g font-size="17" text-anchor="middle">
+      <text x="263" y="218">Lee 5</text>
+      <text x="787" y="270">Lee 5</text>
+      <text x="263" y="322">Calcula 5 + 1 = 6</text>
+      <text x="787" y="374">Calcula 5 + 1 = 6</text>
+      <text x="263" y="426">Escribe 6</text>
+      <text x="787" y="478">Escribe 6</text>
+    </g>
+
+    <!-- Cada fila muestra el valor compartido después de la operación. -->
+    <g stroke="#57606a">
+      <rect x="452" y="192" width="148" height="40" rx="4" fill="#ffffff"/>
+      <rect x="452" y="244" width="148" height="40" rx="4" fill="#ffffff"/>
+      <rect x="452" y="296" width="148" height="40" rx="4" fill="#ffffff"/>
+      <rect x="452" y="348" width="148" height="40" rx="4" fill="#ffffff"/>
+      <rect x="452" y="400" width="148" height="40" rx="4" fill="#dafbe1"/>
+      <rect x="452" y="452" width="148" height="40" rx="4" fill="#ffebe9"/>
+    </g>
+    <g font-size="18" font-weight="bold" text-anchor="middle">
+      <text x="526" y="218">5</text><text x="526" y="270">5</text>
+      <text x="526" y="322">5</text><text x="526" y="374">5</text>
+      <text x="526" y="426">6</text><text x="526" y="478">6</text>
+    </g>
+    <g stroke="#57606a" stroke-width="1.5" fill="none" marker-end="url(#cc-arrow)">
+      <path d="M450,212 H392"/><path d="M602,264 H658"/>
+      <path d="M392,420 H450"/><path d="M658,472 H602"/>
+    </g>
+    <text x="136" y="520" font-size="14">Flechas: acceso al contador. Los cálculos usan el valor local leído por cada hilo.</text>
+
+    <rect x="32" y="540" width="570" height="44" rx="4" fill="#ffebe9" stroke="#57606a"/>
+    <text x="48" y="568" font-size="17" font-weight="bold">Resultado: 6 · se pierde una actualización</text>
+    <rect x="622" y="540" width="306" height="44" rx="4" fill="#dafbe1" stroke="#57606a"/>
+    <text x="638" y="568" font-size="17">Esperado: 5 + 1 + 1 = 7</text>
+    <text x="32" y="612" font-size="16">El bloqueo debe proteger toda la operación: lectura + modificación + escritura.</text>
+    <text x="32" y="636" font-size="14">Proteger solo la escritura deja que ambos hilos calculen 6 a partir del mismo valor inicial.</text>
+  </g>
+</svg>
