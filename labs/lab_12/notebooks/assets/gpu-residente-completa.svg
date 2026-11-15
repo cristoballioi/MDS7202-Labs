@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" role="img" aria-labelledby="gpu-ti-title gpu-ti-desc">
+  <title id="gpu-ti-title">GPU residente y GPU completa: alcance de la medición</title>
+  <desc id="gpu-ti-desc">Diagrama temporal con carriles host y dispositivo. GPU completa incluye colocar las entradas, invocar el cálculo, esperar su finalización y obtener una copia NumPy en CPU. GPU residente comienza con entradas preparadas e incluye el costo host de la invocación y block_until_ready. El lanzamiento devuelve el control antes de que termine el cálculo. En una GPU integrada la memoria física es compartida, pero preparar y copiar sigue teniendo costo.</desc>
+  <defs>
+    <marker id="gpu-ti-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L8 4 L0 8 Z" fill="#57606a"/></marker>
+  </defs>
+  <rect width="960" height="660" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="56" font-size="24" font-weight="700">Qué mide cada tiempo GPU</text>
+    <text x="32" y="86" font-size="16">Una operación aislada; esquema sin escala de duración.</text>
+
+    <g id="gpu-ti-completa">
+      <text x="150" y="126" font-size="18" font-weight="700">GPU completa</text>
+      <text x="310" y="126" font-size="16">Entradas + invocación, cálculo y espera + salida NumPy</text>
+      <path d="M150 151 V140 H928 V151" fill="none" stroke="#57606a" stroke-width="2"/>
+    </g>
+    <g id="gpu-ti-residente">
+      <text x="350" y="181" font-size="18" font-weight="700">GPU residente</text>
+      <path d="M350 206 V195 H740 V206" fill="none" stroke="#57606a" stroke-width="2"/>
+      <text x="350" y="229" font-size="14">Entradas ya preparadas y listas en el dispositivo</text>
+    </g>
+    <text x="841" y="229" font-size="16">Tiempo →</text>
+
+    <text x="32" y="294" font-size="18" font-weight="700">Host</text>
+    <text x="32" y="316" font-size="14">CPU / Python</text>
+    <path d="M142 345 H928 M142 469 H928" fill="none" stroke="#57606a" stroke-width="1" stroke-dasharray="4 5"/>
+    <g stroke="#57606a" stroke-width="1.5">
+      <rect x="150" y="270" width="165" height="66" rx="6" fill="#ddf4ff"/>
+      <rect x="350" y="270" width="140" height="66" rx="6" fill="#ddf4ff"/>
+      <rect x="510" y="270" width="230" height="66" rx="6" fill="#fff8c5"/>
+      <rect x="770" y="270" width="158" height="66" rx="6" fill="#dafbe1"/>
+    </g>
+    <g font-size="17" text-anchor="middle">
+      <text x="232" y="297">Colocar entradas</text>
+      <text x="232" y="320" font-size="14">device_put</text>
+      <text x="420" y="297">Llamar / lanzar</text>
+      <text x="420" y="320" font-size="14">función compilada</text>
+      <text x="625" y="295">Esperar finalización</text>
+      <text x="625" y="320" font-size="15">.block_until_ready()</text>
+      <text x="849" y="295">Salida en CPU</text>
+      <text x="849" y="320" font-size="14">copia a NumPy</text>
+    </g>
+    <g fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#gpu-ti-arrow)">
+      <path d="M315 303 H345"/>
+      <path d="M490 303 H505"/>
+      <path d="M740 303 H765"/>
+    </g>
+
+    <text x="32" y="416" font-size="18" font-weight="700">Dispositivo</text>
+    <text x="32" y="438" font-size="14">GPU</text>
+    <g stroke="#57606a" stroke-width="1.5">
+      <rect x="150" y="390" width="165" height="66" rx="6" fill="#dafbe1"/>
+      <rect x="420" y="390" width="320" height="66" rx="6" fill="#ddf4ff"/>
+    </g>
+    <g text-anchor="middle" font-size="17">
+      <text x="232" y="417">Entradas listas</text>
+      <text x="232" y="440" font-size="14">para usar en GPU</text>
+      <text x="580" y="428">Calcular</text>
+    </g>
+    <g fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#gpu-ti-arrow)">
+      <path d="M232 336 V385"/>
+      <path d="M420 336 V385"/>
+      <path d="M740 390 V341"/>
+    </g>
+    <text x="754" y="368" font-size="14">Sincronizar al final</text>
+    <path d="M490 342 V475" fill="none" stroke="#57606a" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="490" y="497" font-size="15" text-anchor="middle">El lanzamiento retorna; la GPU aún trabaja</text>
+
+    <text x="32" y="541" font-size="16" font-weight="700">Residente incluye el costo host de invocar y esperar: no mide solo el kernel.</text>
+    <text x="32" y="568" font-size="15">La compilación y el calentamiento quedan fuera de estas mediciones.</text>
+    <text x="32" y="608" font-size="15">En una GPU integrada se comparte memoria física, pero preparar y copiar sigue costando.</text>
+    <text x="32" y="632" font-size="15">Las flechas representan dependencias; no siempre son viajes entre dos bancos de memoria.</text>
+  </g>
+</svg>

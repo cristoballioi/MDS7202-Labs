@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="escala-ll-title escala-ll-desc">
+  <title id="escala-ll-title">Escalas lineal y logarítmica: qué representa una distancia igual</title>
+  <desc id="escala-ll-desc">Dos ejes verticales ilustrativos con cuatro marcas equidistantes. En el eje lineal, los valores 1, 2, 3 y 4 aumentan en 1 por intervalo. En el logarítmico, los valores 1, 10, 100 y 1000 se multiplican por 10 por intervalo, aunque sus diferencias absolutas son 9, 90 y 900. La separación vertical logarítmica expresa una proporción, no una diferencia absoluta. No se representan cero ni valores negativos. Estos ejemplos no son resultados del benchmark.</desc>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="56" font-size="24" font-weight="700">Una misma distancia, dos interpretaciones</text>
+    <text x="32" y="86" font-size="16">Ejemplos de escalas; no son resultados del benchmark</text>
+
+    <rect x="32" y="112" width="432" height="318" rx="8" fill="#ddf4ff" stroke="#57606a" stroke-width="1.5"/>
+    <rect x="496" y="112" width="432" height="318" rx="8" fill="#dafbe1" stroke="#57606a" stroke-width="1.5"/>
+    <text x="56" y="144" font-size="18" font-weight="700">Escala lineal</text>
+    <text x="520" y="144" font-size="18" font-weight="700">Escala logarítmica</text>
+
+    <g stroke="#57606a" stroke-width="2" fill="none">
+      <path d="M128 360 V176 M120 180 H136 M120 240 H136 M120 300 H136 M120 360 H136"/>
+      <path d="M600 360 V176 M592 180 H608 M592 240 H608 M592 300 H608 M592 360 H608"/>
+      <path d="M150 184 H160 V236 H150 M150 244 H160 V296 H150 M150 304 H160 V356 H150"/>
+      <path d="M622 184 H632 V236 H622 M622 244 H632 V296 H622 M622 304 H632 V356 H622"/>
+    </g>
+    <g font-size="18" text-anchor="end">
+      <text x="110" y="186">4</text>
+      <text x="110" y="246">3</text>
+      <text x="110" y="306">2</text>
+      <text x="110" y="366">1</text>
+      <text x="582" y="186">1000</text>
+      <text x="582" y="246">100</text>
+      <text x="582" y="306">10</text>
+      <text x="582" y="366">1</text>
+    </g>
+    <g font-size="18" font-weight="700">
+      <text x="174" y="216">+1</text>
+      <text x="174" y="276">+1</text>
+      <text x="174" y="336">+1</text>
+      <text x="646" y="216">×10</text>
+      <text x="646" y="276">×10</text>
+      <text x="646" y="336">×10</text>
+    </g>
+    <g font-size="16">
+      <text x="236" y="239">Diferencias iguales</text>
+      <text x="236" y="264">en cada intervalo.</text>
+      <text x="718" y="239">Razones iguales</text>
+      <text x="718" y="264">en cada intervalo.</text>
+      <text x="56" y="405">Cada paso suma la misma cantidad.</text>
+      <text x="520" y="405">Cada paso multiplica por el mismo factor.</text>
+    </g>
+
+    <rect x="32" y="450" width="896" height="78" rx="8" fill="#fff8c5" stroke="#57606a" stroke-width="1.5"/>
+    <text x="52" y="477" font-size="16" font-weight="700">En escala logarítmica, igual separación vertical indica igual proporción.</text>
+    <text x="52" y="503" font-size="16">Las diferencias cambian: 10 − 1 = 9; 100 − 10 = 90; 1000 − 100 = 900.</text>
+  </g>
+</svg>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="700" viewBox="0 0 960 700" role="img" aria-labelledby="scp-title scp-desc">
+  <title id="scp-title">Ejecución secuencial, concurrente y paralela</title>
+  <desc id="scp-desc">Tres cronogramas con la misma escala temporal y las mismas tareas A y B: cada una calcula, espera y vuelve a calcular. En secuencial, B comienza cuando A termina. En concurrente, un solo núcleo alterna el cálculo de ambas tareas mientras se solapan sus esperas; nunca hay dos cálculos simultáneos. En paralelo, dos núcleos calculan simultáneamente. Las tareas suspendidas no ejecutan cálculo durante la espera.</desc>
+  <defs>
+    <pattern id="scp-wait" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#fff8c5"/>
+      <path d="M-2,2 L2,-2 M0,8 L8,0 M6,10 L10,6" stroke="#57606a" stroke-opacity="0.22"/>
+    </pattern>
+    <marker id="scp-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8" fill="#57606a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="700" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="bold">Secuencial, concurrente y paralelo</text>
+    <text x="32" y="82" font-size="16">Mismas tareas A y B: cálculo → espera → cálculo. Misma escala temporal.</text>
+
+    <rect x="32" y="104" width="34" height="24" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="76" y="122" font-size="16">Cálculo: ocupa un núcleo</text>
+    <rect x="298" y="104" width="34" height="24" fill="url(#scp-wait)" stroke="#57606a"/>
+    <text x="342" y="122" font-size="16">Espera: tarea suspendida</text>
+    <circle cx="600" cy="116" r="10" fill="#dafbe1" stroke="#57606a"/>
+    <text x="620" y="122" font-size="16">Fin de la tarea</text>
+
+    <!-- Las guías comparten origen y escala en los tres cronogramas. -->
+    <g stroke="#57606a" stroke-opacity="0.15" stroke-dasharray="4 5">
+      <path d="M236,186 V598 M316,186 V598 M396,186 V598 M476,186 V598 M556,186 V598 M636,186 V598 M716,186 V598 M796,186 V598 M876,186 V598"/>
+    </g>
+
+    <text x="32" y="172" font-size="18" font-weight="bold">Secuencial · un núcleo</text>
+    <text x="438" y="172" font-size="16">B comienza cuando A termina.</text>
+    <g font-size="16">
+      <text x="32" y="219">A · núcleo 1</text>
+      <text x="32" y="261">B · núcleo 1</text>
+      <path d="M236,212 H908 M236,254 H908" stroke="#57606a" stroke-opacity="0.3"/>
+      <rect x="236" y="196" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="316" y="196" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="476" y="196" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="556" y="238" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="636" y="238" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="796" y="238" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <g text-anchor="middle">
+        <text x="276" y="218">cálculo</text>
+        <text x="396" y="218">espera</text>
+        <text x="516" y="218">cálculo</text>
+        <text x="596" y="260">cálculo</text>
+        <text x="716" y="260">espera</text>
+        <text x="836" y="260">cálculo</text>
+      </g>
+      <circle cx="556" cy="212" r="6" fill="#dafbe1" stroke="#57606a"/>
+      <circle cx="876" cy="254" r="6" fill="#dafbe1" stroke="#57606a"/>
+    </g>
+
+    <text x="32" y="328" font-size="18" font-weight="bold">Concurrente · un núcleo</text>
+    <text x="438" y="328" font-size="16">Cálculo por turnos; esperas solapadas.</text>
+    <g font-size="16">
+      <text x="32" y="375">A · núcleo 1</text>
+      <text x="32" y="417">B · núcleo 1</text>
+      <path d="M236,368 H908 M236,410 H908" stroke="#57606a" stroke-opacity="0.3"/>
+      <rect x="236" y="352" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="316" y="352" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="476" y="352" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="316" y="394" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="396" y="394" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="556" y="394" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <g text-anchor="middle">
+        <text x="276" y="374">cálculo</text>
+        <text x="396" y="374">espera</text>
+        <text x="516" y="374">cálculo</text>
+        <text x="356" y="416">cálculo</text>
+        <text x="476" y="416">espera</text>
+        <text x="596" y="416">cálculo</text>
+      </g>
+      <circle cx="556" cy="368" r="6" fill="#dafbe1" stroke="#57606a"/>
+      <circle cx="636" cy="410" r="6" fill="#dafbe1" stroke="#57606a"/>
+    </g>
+
+    <text x="32" y="484" font-size="18" font-weight="bold">Paralelo · dos núcleos</text>
+    <text x="438" y="484" font-size="16">Cálculo simultáneo en recursos distintos.</text>
+    <g font-size="16">
+      <text x="32" y="531">A · núcleo 1</text>
+      <text x="32" y="573">B · núcleo 2</text>
+      <path d="M236,524 H908 M236,566 H908" stroke="#57606a" stroke-opacity="0.3"/>
+      <rect x="236" y="508" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="316" y="508" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="476" y="508" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="236" y="550" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <rect x="316" y="550" width="160" height="32" fill="url(#scp-wait)" stroke="#57606a"/>
+      <rect x="476" y="550" width="80" height="32" fill="#ddf4ff" stroke="#57606a"/>
+      <g text-anchor="middle">
+        <text x="276" y="530">cálculo</text>
+        <text x="396" y="530">espera</text>
+        <text x="516" y="530">cálculo</text>
+        <text x="276" y="572">cálculo</text>
+        <text x="396" y="572">espera</text>
+        <text x="516" y="572">cálculo</text>
+      </g>
+      <circle cx="556" cy="524" r="6" fill="#dafbe1" stroke="#57606a"/>
+      <circle cx="556" cy="566" r="6" fill="#dafbe1" stroke="#57606a"/>
+    </g>
+
+    <path d="M236,600 H912" stroke="#57606a" stroke-width="1.5" marker-end="url(#scp-arrow)"/>
+    <text x="236" y="622" font-size="14" text-anchor="middle">inicio</text>
+    <text x="908" y="622" font-size="14" text-anchor="end">tiempo →</text>
+    <text x="32" y="643" font-size="14">En el esquema, cada núcleo atiende un cálculo a la vez. Async no agrega núcleos.</text>
+    <text x="32" y="665" font-size="14">Tiempos esquemáticos; se omiten costos de coordinación y diferencias entre recursos.</text>
+  </g>
+</svg>

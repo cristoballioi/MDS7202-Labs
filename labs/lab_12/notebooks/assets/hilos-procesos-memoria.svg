@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="700" viewBox="0 0 960 700" role="img" aria-labelledby="memoria-title memoria-desc">
+  <title id="memoria-title">Hilos y procesos: espacios de memoria</title>
+  <desc id="memoria-desc">Arriba, dos hilos de un mismo proceso pueden acceder al mismo objeto por referencias dentro de su espacio de memoria. Cada hilo también puede crear objetos propios. Abajo, el proceso principal y los trabajadores A y B tienen espacios separados: los argumentos se serializan, se envían y se reconstruyen; los resultados se transfieren de regreso. Se muestra un esquema conceptual, no los objetos de trabajo del laboratorio.</desc>
+  <defs>
+    <marker id="memoria-flecha" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#57606a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="700" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="700">Hilos y procesos: espacios de memoria</text>
+
+    <text x="32" y="99" font-size="18" font-weight="700">Hilos: un espacio de memoria compartido</text>
+    <rect x="32" y="120" width="896" height="192" rx="8" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+    <text x="56" y="149" font-size="16">Un proceso</text>
+    <rect x="80" y="176" width="200" height="64" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="180" y="214" text-anchor="middle" font-size="18">Hilo A</text>
+    <rect x="376" y="176" width="208" height="64" rx="6" fill="#dafbe1" stroke="#57606a"/>
+    <text x="480" y="214" text-anchor="middle" font-size="18">Objeto compartido</text>
+    <rect x="680" y="176" width="200" height="64" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="780" y="214" text-anchor="middle" font-size="18">Hilo B</text>
+    <g stroke="#57606a" stroke-width="2" fill="none" marker-end="url(#memoria-flecha)">
+      <path d="M 280 208 H 374"/>
+      <path d="M 680 208 H 586"/>
+    </g>
+    <text x="328" y="194" text-anchor="middle" font-size="14">referencia</text>
+    <text x="632" y="194" text-anchor="middle" font-size="14">referencia</text>
+    <text x="56" y="282" font-size="16">Pueden acceder al mismo objeto; cada hilo también puede crear objetos propios.</text>
+
+    <text x="32" y="354" font-size="18" font-weight="700">Procesos: espacios de memoria separados</text>
+    <rect x="32" y="372" width="896" height="260" rx="8" fill="#ffffff" stroke="#57606a"/>
+    <rect x="56" y="396" width="192" height="212" rx="6" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+    <text x="152" y="470" text-anchor="middle" font-size="18" font-weight="700">Proceso principal</text>
+    <text x="152" y="498" text-anchor="middle" font-size="16">Su memoria</text>
+    <rect x="80" y="524" width="144" height="48" rx="5" fill="#dafbe1" stroke="#57606a"/>
+    <text x="152" y="554" text-anchor="middle" font-size="16">Objeto original</text>
+
+    <rect x="688" y="396" width="216" height="92" rx="6" fill="#ddf4ff" stroke="#57606a" stroke-width="2"/>
+    <text x="796" y="422" text-anchor="middle" font-size="18" font-weight="700">Proceso A</text>
+    <text x="796" y="447" text-anchor="middle" font-size="16">Su memoria</text>
+    <text x="796" y="472" text-anchor="middle" font-size="16">Objeto reconstruido</text>
+    <rect x="688" y="516" width="216" height="92" rx="6" fill="#ddf4ff" stroke="#57606a" stroke-width="2"/>
+    <text x="796" y="542" text-anchor="middle" font-size="18" font-weight="700">Proceso B</text>
+    <text x="796" y="567" text-anchor="middle" font-size="16">Su memoria</text>
+    <text x="796" y="592" text-anchor="middle" font-size="16">Objeto reconstruido</text>
+
+    <g stroke="#57606a" stroke-width="2" fill="none" marker-end="url(#memoria-flecha)">
+      <path d="M 248 432 H 686"/>
+      <path d="M 688 476 H 250"/>
+      <path d="M 248 552 H 686"/>
+      <path d="M 688 596 H 250"/>
+    </g>
+    <text x="468" y="420" text-anchor="middle" font-size="16">Argumento: serializar → enviar → reconstruir</text>
+    <text x="468" y="464" text-anchor="middle" font-size="16">Devolver resultado: serializar → enviar → reconstruir</text>
+    <text x="468" y="540" text-anchor="middle" font-size="16">Argumento: serializar → enviar → reconstruir</text>
+    <text x="468" y="584" text-anchor="middle" font-size="16">Devolver resultado: serializar → enviar → reconstruir</text>
+
+    <text x="32" y="668" font-size="16">Modificar el objeto reconstruido en un trabajador no modifica el objeto del proceso principal.</text>
+  </g>
+</svg>

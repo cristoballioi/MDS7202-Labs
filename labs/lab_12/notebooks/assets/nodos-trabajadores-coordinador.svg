@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="distribuida-title distribuida-desc">
+  <title id="distribuida-title">Nodos, trabajadores y coordinador</title>
+  <desc id="distribuida-desc">Esquema de una red de bibliotecas. El nodo A es una máquina con dos trabajadores y el nodo B es otra máquina con un trabajador. Los registros de libros permanecen en cada nodo. Cada trabajador envía un resumen por la red al coordinador, que combina los resúmenes para obtener un resultado global. El panel inferior distingue este despliegue del notebook: allí un solo proceso ejecuta tres trabajadores simulados uno tras otro, sin comunicación por red.</desc>
+  <defs>
+    <marker id="distribuida-flecha" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#57606a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="720" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2328">
+    <text x="32" y="52" font-size="24" font-weight="700">Nodos, trabajadores y coordinador</text>
+    <text x="32" y="86" font-size="18">Bibliotecas: resumir los registros de libros sin reunirlos en la central.</text>
+    <text x="32" y="124" font-size="18" font-weight="700">Despliegue distribuido: máquinas conectadas por una red</text>
+
+    <!-- Los marcos representan máquinas; los trabajadores viven dentro de ellas. -->
+    <rect x="32" y="148" width="432" height="190" rx="8" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+    <text x="56" y="181" font-size="18" font-weight="700">Nodo A · una máquina</text>
+    <rect x="56" y="230" width="136" height="70" rx="6" fill="#dafbe1" stroke="#57606a"/>
+    <text x="124" y="259" text-anchor="middle" font-size="16">Registros</text>
+    <text x="124" y="283" text-anchor="middle" font-size="16">locales</text>
+    <rect x="224" y="210" width="216" height="48" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="332" y="240" text-anchor="middle" font-size="17">Trabajador 1</text>
+    <rect x="224" y="276" width="216" height="48" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="332" y="306" text-anchor="middle" font-size="17">Trabajador 2</text>
+
+    <rect x="32" y="362" width="432" height="158" rx="8" fill="#ffffff" stroke="#57606a" stroke-width="2"/>
+    <text x="56" y="395" font-size="18" font-weight="700">Nodo B · otra máquina</text>
+    <rect x="56" y="421" width="136" height="70" rx="6" fill="#dafbe1" stroke="#57606a"/>
+    <text x="124" y="450" text-anchor="middle" font-size="16">Registros</text>
+    <text x="124" y="474" text-anchor="middle" font-size="16">locales</text>
+    <rect x="224" y="432" width="216" height="48" rx="6" fill="#ddf4ff" stroke="#57606a"/>
+    <text x="332" y="462" text-anchor="middle" font-size="17">Trabajador 3</text>
+
+    <g fill="none" stroke="#57606a" stroke-width="2" marker-end="url(#distribuida-flecha)">
+      <path d="M 192 253 H 208 V 234 H 222"/>
+      <path d="M 192 277 H 208 V 300 H 222"/>
+      <path d="M 192 456 H 222"/>
+    </g>
+
+    <!-- Solo los resúmenes atraviesan los límites de las máquinas. -->
+    <text x="556" y="181" text-anchor="middle" font-size="18" font-weight="700">Red</text>
+    <text x="546" y="220" text-anchor="middle" font-size="16">Resumen 1</text>
+    <text x="546" y="286" text-anchor="middle" font-size="16">Resumen 2</text>
+    <text x="546" y="442" text-anchor="middle" font-size="16">Resumen 3</text>
+    <g fill="none" stroke="#57606a" stroke-width="2" marker-end="url(#distribuida-flecha)">
+      <path d="M 440 234 H 654 V 275 H 698"/>
+      <path d="M 440 300 H 628 V 330 H 698"/>
+      <path d="M 440 456 H 654 V 385 H 698"/>
+    </g>
+
+    <rect x="700" y="216" width="228" height="264" rx="8" fill="#fff8c5" stroke="#57606a" stroke-width="2"/>
+    <text x="814" y="250" text-anchor="middle" font-size="18" font-weight="700">Coordinador</text>
+    <text x="814" y="294" text-anchor="middle" font-size="16">Recibe y combina</text>
+    <text x="814" y="319" text-anchor="middle" font-size="16">los resúmenes</text>
+    <path d="M 814 344 V 376" fill="none" stroke="#57606a" stroke-width="2" marker-end="url(#distribuida-flecha)"/>
+    <rect x="720" y="388" width="188" height="64" rx="6" fill="#ffffff" stroke="#57606a"/>
+    <text x="814" y="426" text-anchor="middle" font-size="17">Resultado global</text>
+
+    <text x="32" y="550" font-size="16">Los registros permanecen en cada nodo; por la red viajan los resúmenes.</text>
+    <text x="32" y="570" font-size="14">Cada trabajador resume una partición distinta de los registros locales.</text>
+
+    <rect x="32" y="582" width="896" height="106" rx="8" fill="#fff8c5" stroke="#57606a"/>
+    <text x="56" y="613" font-size="18" font-weight="700">Lo que ejecuta este notebook</text>
+    <text x="56" y="642" font-size="16">Un solo proceso ejecuta tres trabajadores simulados, uno tras otro.</text>
+    <text x="56" y="669" font-size="16">No hay comunicación por red ni tres máquinas trabajando en paralelo.</text>
+  </g>
+</svg>
