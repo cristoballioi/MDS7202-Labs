@@ -1,0 +1,55 @@
+[project]
+name = "aguaapr"
+version = "0.1.0"
+description = "Proyecto del Laboratorio 13: servicio de potabilidad de la sanitaria de Maipú"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+# Dos grupos con propósitos distintos. `servicio` es lo que la imagen Docker
+# instala (`uv sync --only-group servicio`): solo lo que el servicio necesita
+# para correr. `dev` agrega lo que usa el equipo para trabajar, como JupyterLab
+# y pytest, que no deben viajar dentro de la imagen.
+[dependency-groups]
+servicio = [
+    "fastapi>=0.115.0",
+    "httpx>=0.28.0",
+    "polars>=1.44.0",
+    "pydantic-settings>=2.10.0",
+    "scikit-learn>=1.7.0",
+    "streamlit>=1.40.0",
+    "uvicorn>=0.35.0",
+]
+dev = [
+    "httpx>=0.28.0",
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.2",
+    "jupytext==1.19.5",
+    "nbformat>=5.10",
+    "polars>=1.44.0",
+    "pre-commit>=4.6.1",
+    "pyyaml>=6.0",
+    "pytest>=9.1.1",
+    "ruff>=0.17.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Permite importar con `from src.aguaapr...`, igual que el notebook.
+pythonpath = ["."]
+markers = [
+    "etapa1: pruebas del artefacto y del contrato de inferencia",
+    "etapa2: pruebas de la API, la configuración y la clave de API",
+    "etapa3: pruebas estáticas de los archivos de Docker",
+    "etapa4: pruebas estáticas de la imagen para la nube",
+]
+
+[tool.ruff]
+line-length = 80
+target-version = "py313"
+# Los notebooks y los .md son material docente. Sin esta exclusión,
+# ruff-format reescribe el .py pareado y rompe el par dentro del commit.
+extend-exclude = ["notebooks", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RUF", "PT", "PTH"]
+ignore = ["E501", "RUF003"]
